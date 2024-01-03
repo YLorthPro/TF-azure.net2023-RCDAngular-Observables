@@ -1,0 +1,9 @@
+<div *ngIf="post!=undefined && !loading">
+  <h2>Title: {{post.title}}</h2>
+  <h3>User: {{user}}</h3>
+  <h3>Content: {{post.body}}</h3>
+</div>
+
+<div *ngIf="loading">
+  <h1>JE CHHAAAAAAARGE</h1>
+</div>

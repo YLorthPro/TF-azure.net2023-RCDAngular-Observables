@@ -1,0 +1,22 @@
+<div class="posts" *ngIf="!loading">
+  <thead>
+    <tr>
+      <td>id:</td>
+      <td>userId:</td>
+      <td>title:</td>
+      <td>action:</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let post of posts">
+      <td>{{post.id}}</td>
+      <td>{{post.userId}}</td>
+      <td>{{post.title}}</td>
+      <td><button routerLink="/one/{{post.id}}">Infos</button></td>
+    </tr>
+  </tbody>
+</div>
+
+<div *ngIf="loading">
+  <h1>JE CHHAAAAAAARGE</h1>
+</div>

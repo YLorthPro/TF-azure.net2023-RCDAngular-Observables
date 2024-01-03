@@ -1,0 +1,9 @@
+dernier chargement: {{time}}
+
+<div *ngIf="users$|async as list">
+
+  <div *ngFor="let element of list">
+    <p>{{element.name}}</p>
+  </div>
+</div>
+
