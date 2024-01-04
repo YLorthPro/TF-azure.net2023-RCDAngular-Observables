@@ -1,4 +1,4 @@
-<div class="posts" *ngIf="!loading">
+<div class="posts" *ngIf="!loading else chargement">
   <thead>
     <tr>
       <td>id:</td>
@@ -36,7 +36,6 @@
   </form>
 </div>
 
-
-<div *ngIf="loading">
+<ng-template #chargement>
   <h1>JE CHHAAAAAAARGE</h1>
-</div>
+</ng-template>
