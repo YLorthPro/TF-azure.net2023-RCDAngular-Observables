@@ -17,6 +17,26 @@
   </tbody>
 </div>
 
+<div id="autoselect">
+  <form class="example-form" style="padding-left: 20px">
+    Recherche
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>n°</mat-label>
+      <input type="text"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async"
+                    [value]="option" (click)="OnPostSelected(option)">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+
+
 <div *ngIf="loading">
   <h1>JE CHHAAAAAAARGE</h1>
 </div>

@@ -1,7 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PostService} from "../services/post.service";
 import {Post} from "../models/post";
-import {interval, map, Observable, startWith, Subject, switchMap, take, takeUntil, tap} from "rxjs";
+import {debounceTime, interval, map, Observable, startWith, Subject, switchMap, take, takeUntil, tap} from "rxjs";
+import {FormControl} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-posts',
@@ -17,7 +19,12 @@ export class PostsComponent implements OnInit, OnDestroy{
 
   loading = false;
 
-  constructor(private readonly _postService: PostService) {
+  public filteredOptions!: Observable<string[]>;
+
+  public myControl = new FormControl('');
+
+  constructor(private readonly _postService: PostService,
+              private readonly _router: Router) {
   }
 
 
@@ -58,8 +65,31 @@ export class PostsComponent implements OnInit, OnDestroy{
       complete: () => {
         this.loading= false;
         console.log("Recuperation de la liste terminée.");
+
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+          debounceTime(500),
+          startWith(''),
+          map(value => this._filter(value))
+        );
       }
     });
+  }
+
+  private _filter(value: string | null): string[] {
+    if (value && this.posts) {
+      const filterValue = value.toLowerCase();
+      return this.posts
+        .map(post => post.title)
+        .filter(postTitle => postTitle.toLowerCase().includes(filterValue));
+    } else {
+      return [];
+    }
+  }
+
+  OnPostSelected(selection: string){
+
+    console.log("Titre selectionné: "+selection)
+
   }
 
 }
